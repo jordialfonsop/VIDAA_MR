@@ -115,6 +115,14 @@ public class CentrelineRenderer : MonoBehaviour
         }
     }
 
+    public void RenderHardcoded(string centreline)
+    {
+        RenderCentrelinePoints(centreline);
+        CentrelineManager.Instance.centrelinesList.Add(this.gameObject);
+        transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+        this.gameObject.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()

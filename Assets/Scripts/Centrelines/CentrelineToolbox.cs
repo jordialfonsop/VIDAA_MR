@@ -23,8 +23,8 @@ public class CentrelineToolbox : MonoBehaviour
             centrelineButton.name = CentrelineManager.Instance.centrelinesList[i].name.Split("Render")[0] + "Button";
             centrelineButton.GetComponent<CentrelineButton>().SetCentrelineRender(CentrelineManager.Instance.centrelinesList[i]);
             centrelineButton.transform.parent = this.transform;
-            centrelineButton.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = name;
-            centrelineButton.transform.localPosition = new Vector3(0.0f + (0.055f * column), 0.055f - (0.055f * row), 0);
+            centrelineButton.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = CentrelineManager.Instance.centrelinesList[i].name.Split("Render")[0];
+            centrelineButton.transform.localPosition = new Vector3(0.0f + (0.055f * row), 0.055f - (0.055f * column), 0);
             centrelineButton.transform.rotation = new Quaternion(0, 0, 0, 0);
 
             if (column == 2)
