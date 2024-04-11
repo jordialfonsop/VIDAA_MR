@@ -8,7 +8,11 @@ public class CentrelineManager : MonoBehaviour
 {
     [SerializeField] string centrelinesPath;
     [SerializeField] GameObject centrelinesPrefab;
-    [SerializeField] public GameObject renderCube;
+    [SerializeField] Material centrelineActiveMaterial;
+    [SerializeField] Material centrelineUnactiveMaterial;
+    private GameObject activeCentreline;
+    public List<GameObject> centrelinesList = new List<GameObject>();
+
     public struct Point
     {
         //Variable declaration
@@ -28,23 +32,35 @@ public class CentrelineManager : MonoBehaviour
 
     private static CentrelineManager _instance;
 
-    private string currentCentreline;
-
-    private GameObject[] centrelines;
+    
 
     public static CentrelineManager Instance
     {
         get { return _instance; }
     }
 
-    public string GetCurrentCentreline()
+    public GameObject GetActiveCentreline()
     {
-        return currentCentreline;
+        return activeCentreline;
     }
 
-    public void SetCurrentCentreline(string centreline)
+    public void SetActiveCentreline(GameObject centreline)
     {
-        currentCentreline = centreline;
+
+        if (activeCentreline)
+        {
+            activeCentreline.GetComponent<CentrelineRenderer>().SetMaterial(centrelineUnactiveMaterial);
+        }
+        if(centreline)
+        {
+            activeCentreline = centreline;
+            activeCentreline.GetComponent<CentrelineRenderer>().SetMaterial(centrelineActiveMaterial);
+        }
+        else
+        {
+            activeCentreline = null;
+        }
+        
     }
 
 
@@ -56,15 +72,16 @@ public class CentrelineManager : MonoBehaviour
     void Start()
     {
         DirectoryInfo dir = new DirectoryInfo(centrelinesPath);
-        FileInfo[] info = dir.GetFiles("*.*");
+        FileInfo[] info = dir.GetFiles("*.txt");
         foreach (FileInfo f in info)
         {
             string name = f.Name.Split(".txt")[0];
             GameObject centrelineRender = Instantiate(centrelinesPrefab);
-            centrelineRender.name = name;
+            centrelineRender.name = name + " Render";
             centrelineRender.transform.parent = this.transform;
-            centrelineRender.GetComponent<CentrelineRender>().SetFilePathCentreline(f.FullName);
-            centrelineRender.GetComponent<CentrelineRender>().StartRender();
+            centrelineRender.GetComponent<CentrelineRenderer>().SetFilePathCentreline(f.FullName);
+            centrelineRender.GetComponent<CentrelineRenderer>().Render();
+            centrelineRender.GetComponent<CentrelineRenderer>().SetMaterial(centrelineUnactiveMaterial);
 
         }
     }

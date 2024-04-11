@@ -14,18 +14,30 @@ public class CentrelineToolbox : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        DirectoryInfo dir = new DirectoryInfo(path);
-        FileInfo[] info = dir.GetFiles("*.*");
-        foreach (FileInfo f in info)
+        int row = 0;
+        int column = 0;
+
+        for(int i = 0; i < CentrelineManager.Instance.centrelinesList.Count; i++)
         {
-            string name = f.Name.Split(".txt")[0];
-            Debug.Log(name);
             GameObject centrelineButton = Instantiate(button);
+            centrelineButton.name = CentrelineManager.Instance.centrelinesList[i].name.Split("Render")[0] + "Button";
+            centrelineButton.GetComponent<CentrelineButton>().SetCentrelineRender(CentrelineManager.Instance.centrelinesList[i]);
             centrelineButton.transform.parent = this.transform;
             centrelineButton.transform.GetChild(1).GetChild(0).GetChild(0).GetChild(0).GetComponent<TMP_Text>().text = name;
-            centrelineButton.transform.localPosition = new Vector3(0,0,0);
-            centrelineButton.transform.rotation = new Quaternion(0,0,0,0);
+            centrelineButton.transform.localPosition = new Vector3(0.0f + (0.055f * column), 0.055f - (0.055f * row), 0);
+            centrelineButton.transform.rotation = new Quaternion(0, 0, 0, 0);
+
+            if (column == 2)
+            {
+                column = 0;
+                row++;
+            }
+            else
+            {
+                column++;
+            }
         }
+            
     }
 
     // Update is called once per frame

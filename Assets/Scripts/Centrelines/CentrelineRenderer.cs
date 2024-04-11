@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Globalization;
-using static UnityEngine.GraphicsBuffer;
-using Unity.VisualScripting;
 
-public class CentrelineRender : MonoBehaviour
+public class CentrelineRenderer : MonoBehaviour
 {
 
-    
-
     private List<CentrelineManager.Point> centrelinePoints = new List<CentrelineManager.Point>();
+    private List<GameObject> centrelineCubes = new List<GameObject>();
     private string filePathCentreline;
     public string GetFilePathCentreline()
     {
@@ -96,16 +93,29 @@ public class CentrelineRender : MonoBehaviour
             capsule.transform.parent = transform;
             capsule.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
             capsule.transform.localPosition = new Vector3((float)centrelinePoints[i].coordx, (float)centrelinePoints[i].coordy, (float)centrelinePoints[i].coordz);
+            centrelineCubes.Add(capsule);
         }
 
     }
 
-    public void StartRender()
+    public void Render()
     {
         RenderCentrelinePoints(ReadTextFile(filePathCentreline));
+        CentrelineManager.Instance.centrelinesList.Add(this.gameObject);
         transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+        this.gameObject.SetActive(false);
     }
+
+    public void SetMaterial(Material material)
+    {
+        for (int i = 0; i < centrelineCubes.Count; i++)
+        {
+            centrelineCubes[i].GetComponent<Renderer>().material = material;
+        }
+    }
+
+
     // Start is called before the first frame update
     void Start()
     {
