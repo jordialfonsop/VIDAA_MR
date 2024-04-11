@@ -6,29 +6,24 @@ using System.Globalization;
 using static UnityEngine.GraphicsBuffer;
 using Unity.VisualScripting;
 
-public class HeartRender : MonoBehaviour
+public class CentrelineRender : MonoBehaviour
 {
 
-    struct Point
-    {
-        //Variable declaration
-        //Note: I'm explicitly declaring them as public, but they are public by default. You can use private if you choose.
-        public double coordx;
-        public double coordy;
-        public double coordz;
+    
 
-        //Constructor (not necessary, but helpful)
-        public Point(double coordx, double coordy, double coordz)
-        {
-            this.coordx = coordx;
-            this.coordy = coordy;
-            this.coordz = coordz;
-        }
+    private List<CentrelineManager.Point> centrelinePoints = new List<CentrelineManager.Point>();
+    private string filePathCentreline;
+    public string GetFilePathCentreline()
+    {
+        return filePathCentreline;
     }
 
-    private List<Point> heartPoints = new List<Point>();
-    private string heartInput;
-    [SerializeField] private string filePathHeart;
+    public void SetFilePathCentreline(string path)
+    {
+        filePathCentreline = path;
+    }
+
+    public List<CentrelineManager.Point> GetCentrelinePoints() { return centrelinePoints; }
 
 
 
@@ -49,9 +44,9 @@ public class HeartRender : MonoBehaviour
         return input;
     }
 
-    void ReadHeartPoints(string input)
+    void ReadCentrelinePoints(string input)
     {
-        heartPoints.Clear();
+        centrelinePoints.Clear();
 
         string[] points = input.Split(" ");
 
@@ -64,7 +59,6 @@ public class HeartRender : MonoBehaviour
 
         for (int i = 0; i < points.Length; i++)
         {
-            Debug.Log(points[i]);
 
             switch (coordaxis)
             {
@@ -79,8 +73,8 @@ public class HeartRender : MonoBehaviour
                 case 2:
                     coordaxis = 0;
                     coordz = double.Parse(points[i], CultureInfo.InvariantCulture.NumberFormat);
-                    Point point = new Point(coordx, coordy, coordz);
-                    heartPoints.Add(point);
+                    CentrelineManager.Point point = new CentrelineManager.Point(coordx, coordy, coordz);
+                    centrelinePoints.Add(point);
                     break;
             }
 
@@ -88,32 +82,34 @@ public class HeartRender : MonoBehaviour
 
     }
 
-    void RenderHeartPoints(string input)
+    void RenderCentrelinePoints(string input)
     {
-        ReadHeartPoints(input);
+        ReadCentrelinePoints(input);
         Mesh mesh = new Mesh();
 
-        for (int i = 1;i < heartPoints.Count; i++)
+        for (int i = 1;i < centrelinePoints.Count; i++)
         {
-            Vector3 Oldpos = new Vector3((float)heartPoints[i - 1].coordx, (float)heartPoints[i - 1].coordy, (float)heartPoints[i - 1].coordz);
-            Vector3 Newpos = new Vector3((float)heartPoints[i].coordx, (float)heartPoints[i].coordy, (float)heartPoints[i].coordz);
+            Vector3 Oldpos = new Vector3((float)centrelinePoints[i - 1].coordx, (float)centrelinePoints[i - 1].coordy, (float)centrelinePoints[i - 1].coordz);
+            Vector3 Newpos = new Vector3((float)centrelinePoints[i].coordx, (float)centrelinePoints[i].coordy, (float)centrelinePoints[i].coordz);
             GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
             capsule.transform.parent = transform;
-            capsule.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            capsule.transform.localPosition = new Vector3((float)heartPoints[i].coordx, (float)heartPoints[i].coordy, (float)heartPoints[i].coordz);
+            capsule.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+            capsule.transform.localPosition = new Vector3((float)centrelinePoints[i].coordx, (float)centrelinePoints[i].coordy, (float)centrelinePoints[i].coordz);
         }
 
     }
 
-
+    public void StartRender()
+    {
+        RenderCentrelinePoints(ReadTextFile(filePathCentreline));
+        transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
+        transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+    }
     // Start is called before the first frame update
     void Start()
     {
-        heartInput = ReadTextFile(filePathHeart);
-        RenderHeartPoints(heartInput);
-        transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-        transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+        
 
     }
 

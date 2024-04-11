@@ -6,7 +6,7 @@ using System.Globalization;
 using static UnityEngine.GraphicsBuffer;
 using Unity.VisualScripting;
 
-public class CentrelineRender : MonoBehaviour
+public class HeartRender : MonoBehaviour
 {
 
     struct Point
@@ -26,9 +26,11 @@ public class CentrelineRender : MonoBehaviour
         }
     }
 
-    private List<Point> centrelinePoints = new List<Point>();
-    private string centrelineInput;
-    [SerializeField] private string filePathCentreline;
+    [SerializeField] GameObject renderCube;
+
+    private List<Point> heartPoints = new List<Point>();
+    private string heartInput;
+    [SerializeField] private string filePathHeart;
 
 
 
@@ -49,9 +51,9 @@ public class CentrelineRender : MonoBehaviour
         return input;
     }
 
-    void ReadCentrelinePoints(string input)
+    void ReadHeartPoints(string input)
     {
-        centrelinePoints.Clear();
+        heartPoints.Clear();
 
         string[] points = input.Split(" ");
 
@@ -64,7 +66,6 @@ public class CentrelineRender : MonoBehaviour
 
         for (int i = 0; i < points.Length; i++)
         {
-            Debug.Log(points[i]);
 
             switch (coordaxis)
             {
@@ -80,7 +81,7 @@ public class CentrelineRender : MonoBehaviour
                     coordaxis = 0;
                     coordz = double.Parse(points[i], CultureInfo.InvariantCulture.NumberFormat);
                     Point point = new Point(coordx, coordy, coordz);
-                    centrelinePoints.Add(point);
+                    heartPoints.Add(point);
                     break;
             }
 
@@ -88,20 +89,20 @@ public class CentrelineRender : MonoBehaviour
 
     }
 
-    void RenderCentrelinePoints(string input)
+    void RenderHeartPoints(string input)
     {
-        ReadCentrelinePoints(input);
+        ReadHeartPoints(input);
         Mesh mesh = new Mesh();
 
-        for (int i = 1;i < centrelinePoints.Count; i++)
+        for (int i = 1;i < heartPoints.Count; i++)
         {
-            Vector3 Oldpos = new Vector3((float)centrelinePoints[i - 1].coordx, (float)centrelinePoints[i - 1].coordy, (float)centrelinePoints[i - 1].coordz);
-            Vector3 Newpos = new Vector3((float)centrelinePoints[i].coordx, (float)centrelinePoints[i].coordy, (float)centrelinePoints[i].coordz);
-            GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            Vector3 Oldpos = new Vector3((float)heartPoints[i - 1].coordx, (float)heartPoints[i - 1].coordy, (float)heartPoints[i - 1].coordz);
+            Vector3 Newpos = new Vector3((float)heartPoints[i].coordx, (float)heartPoints[i].coordy, (float)heartPoints[i].coordz);
+            GameObject capsule = Instantiate(renderCube);
 
             capsule.transform.parent = transform;
-            capsule.transform.localScale = new Vector3(0.1f, 0.1f, 0.1f);
-            capsule.transform.localPosition = new Vector3((float)centrelinePoints[i].coordx, (float)centrelinePoints[i].coordy, (float)centrelinePoints[i].coordz);
+            capsule.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
+            capsule.transform.localPosition = new Vector3((float)heartPoints[i].coordx, (float)heartPoints[i].coordy, (float)heartPoints[i].coordz);
         }
 
     }
@@ -110,8 +111,8 @@ public class CentrelineRender : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        centrelineInput = ReadTextFile(filePathCentreline);
-        RenderCentrelinePoints(centrelineInput);
+        heartInput = ReadTextFile(filePathHeart);
+        RenderHeartPoints(heartInput);
         transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         transform.position = new Vector3(0.0f, 0.0f, -10.0f);
 
