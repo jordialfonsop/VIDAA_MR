@@ -744,7 +744,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 5975571165649767323}
         m_TargetAssemblyTypeName: CentrelineButton, Assembly-CSharp
-        m_MethodName: SetActiveCentrelineRender
+        m_MethodName: ButtonPress
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

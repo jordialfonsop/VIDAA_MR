@@ -103,7 +103,7 @@ public class CentrelineRenderer : MonoBehaviour
         RenderCentrelinePoints(ReadTextFile(filePathCentreline));
         CentrelineManager.Instance.centrelinesList.Add(this.gameObject);
         transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-        transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+        //transform.position = new Vector3(0.0f, 0.0f, -10.0f);
         this.gameObject.SetActive(false);
     }
 
@@ -120,7 +120,7 @@ public class CentrelineRenderer : MonoBehaviour
         RenderCentrelinePoints(centreline);
         CentrelineManager.Instance.centrelinesList.Add(this.gameObject);
         transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-        transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+        transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
         this.gameObject.SetActive(false);
     }
 
