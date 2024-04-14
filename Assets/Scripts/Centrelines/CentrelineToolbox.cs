@@ -11,6 +11,8 @@ public class CentrelineToolbox : MonoBehaviour
 
     [SerializeField] private GameObject button;
     [SerializeField] private bool isToggle = false;
+    
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class CentrelineToolbox : MonoBehaviour
         int column = 0;
         if (isToggle)
         {
+            CentrelineManager.Instance.CheckActiveToggleCentrelines();
             for (int i = 0; i < CentrelineManager.Instance.centrelinesList.Count; i++)
             {
                 GameObject centrelineButton = Instantiate(button);
@@ -43,6 +46,15 @@ public class CentrelineToolbox : MonoBehaviour
                 {
                     column++;
                 }
+                for (int j = 0; j < CentrelineManager.Instance.activeToggleCentrelinesList.Count; j++)
+                {
+                    if (CentrelineManager.Instance.activeToggleCentrelinesList[j] == CentrelineManager.Instance.centrelinesList[i])
+                    {
+                        Debug.Log("cute");
+                        centrelineButton.GetComponent<CentrelineButton>().SetButtonColor(new Color(255, 255, 0, 20));
+                    }
+                }
+
             }
         }
         else
@@ -68,6 +80,15 @@ public class CentrelineToolbox : MonoBehaviour
                 {
                     column++;
                 }
+
+                if (CentrelineManager.Instance.GetActiveCentreline())
+                {
+                    if (CentrelineManager.Instance.activeToggleCentrelinesList[i] == CentrelineManager.Instance.GetActiveCentreline())
+                    {
+                        centrelineButton.GetComponent<CentrelineButton>().SetButtonColor(new Color(255, 255, 0, 20));
+                    }
+                }
+                
             }
         }
         

@@ -1,4 +1,4 @@
-Shader "Slices/Y_Upwards" {
+Shader "Slices/Y_Downwards" {
     Properties{
       _MainTex("Texture", 2D) = "white" {}
       _BumpMap("Bumpmap", 2D) = "bump" {}

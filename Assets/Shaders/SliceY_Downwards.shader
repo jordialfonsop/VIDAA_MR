@@ -1,4 +1,4 @@
-Shader "Slices/Y_Downwards" {
+Shader "Slices/Y_Upwards" {
     Properties{
       _Color("Color", Color) = (1.0,1.0,1.0)
       _MainTex("Texture", 2D) = "white" {}

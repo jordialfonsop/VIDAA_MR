@@ -6,6 +6,10 @@ public class CentrelineButton : MonoBehaviour
 {
     private GameObject centrelineRender;
     private bool isToggle = false;
+    public void SetButtonColor(Color color)
+    {
+        this.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Oculus.Interaction.RoundedBoxProperties>().Color = color;
+    }
 
     public bool GetIsToggle() {  return isToggle; }
 
@@ -27,11 +31,13 @@ public class CentrelineButton : MonoBehaviour
         centrelineRender.SetActive(!centrelineRender.activeSelf);
         if (centrelineRender.activeSelf)
         {
+            SetButtonColor(new Color(255, 255, 0, 20));
             CentrelineManager.Instance.SetActiveCentreline(centrelineRender);
         }
         else
         {
-            if(CentrelineManager.Instance.GetActiveCentreline() == centrelineRender)
+            SetButtonColor(new Color(255, 255, 255, 20));
+            if (CentrelineManager.Instance.GetActiveCentreline() == centrelineRender)
             {
                 CentrelineManager.Instance.SetActiveCentreline(null);
             }

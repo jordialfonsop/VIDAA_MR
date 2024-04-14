@@ -4979,6 +4979,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f817b9d2f48118d4cbf2939a7fca01a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shaderMin: -50
+  shaderMax: 25
   slicerMaterial: {fileID: 2100000, guid: 04a40d0d0306f0549bfd96426450c0dc, type: 2}
 --- !u!1 &555631533
 GameObject:
@@ -6590,7 +6592,7 @@ GameObject:
   - component: {fileID: 792318435}
   - component: {fileID: 792318442}
   m_Layer: 0
-  m_Name: Y_Upwards
+  m_Name: Y_Downwards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6813,7 +6815,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f817b9d2f48118d4cbf2939a7fca01a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slicerMaterial: {fileID: 2100000, guid: 592872e5ad795da4d8aef79881407a2c, type: 2}
+  shaderMin: -93
+  shaderMax: -15
+  slicerMaterial: {fileID: 2100000, guid: 5f62e7c05ce2abf488ef7d90474fd9f1, type: 2}
 --- !u!1 &794649032
 GameObject:
   m_ObjectHideFlags: 0
@@ -8393,6 +8397,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 964760545}
+  - component: {fileID: 964760546}
+  - component: {fileID: 964760547}
   m_Layer: 0
   m_Name: SliceConfigurator
   m_TagString: Untagged
@@ -8413,14 +8419,40 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2104304859}
-  - {fileID: 1293215005}
+  - {fileID: 792318434}
   - {fileID: 1384192340}
   - {fileID: 1171894529}
-  - {fileID: 792318434}
+  - {fileID: 1293215005}
   - {fileID: 551539257}
   m_Father: {fileID: 257557295}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &964760546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964760544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7135563f18b1704195d88d5aa973f14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &964760547
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 964760544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e16fc0a9e4e6b445bd6f232b61c4192, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heart: {fileID: 257557290}
+  currentSlicer: {fileID: 0}
 --- !u!1 &969610083
 GameObject:
   m_ObjectHideFlags: 0
@@ -10100,6 +10132,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f817b9d2f48118d4cbf2939a7fca01a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shaderMin: -53
+  shaderMax: 52
   slicerMaterial: {fileID: 2100000, guid: b3e813b3d3b9e7c47ad62bd686f04742, type: 2}
 --- !u!1 &1182506423
 GameObject:
@@ -11064,7 +11098,7 @@ GameObject:
   - component: {fileID: 1293215012}
   - component: {fileID: 1293215013}
   m_Layer: 0
-  m_Name: Y_Downwards
+  m_Name: Y_Upwards
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11287,7 +11321,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f817b9d2f48118d4cbf2939a7fca01a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slicerMaterial: {fileID: 2100000, guid: 5f62e7c05ce2abf488ef7d90474fd9f1, type: 2}
+  shaderMin: -193
+  shaderMax: -115
+  slicerMaterial: {fileID: 2100000, guid: 592872e5ad795da4d8aef79881407a2c, type: 2}
 --- !u!1 &1312200681
 GameObject:
   m_ObjectHideFlags: 0
@@ -11769,6 +11805,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f817b9d2f48118d4cbf2939a7fca01a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shaderMin: 100
+  shaderMax: 175
   slicerMaterial: {fileID: 2100000, guid: 3a1862e2373fccd43b24dfdd5452f2ca, type: 2}
 --- !u!1 &1405065477
 GameObject:
@@ -16645,7 +16683,7 @@ PrefabInstance:
     - target: {fileID: -7635826562936255635, guid: ccecaadb6db08f440a080973aa52add1, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 04a40d0d0306f0549bfd96426450c0dc, type: 2}
+      objectReference: {fileID: 2100000, guid: 6f9783f1756c4ce4bbebeaf44ffea44f, type: 2}
     - target: {fileID: 919132149155446097, guid: ccecaadb6db08f440a080973aa52add1, type: 3}
       propertyPath: m_Name
       value: Bordeaux_Case5_LA
@@ -17402,6 +17440,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f817b9d2f48118d4cbf2939a7fca01a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shaderMin: 97
+  shaderMax: 202
   slicerMaterial: {fileID: 2100000, guid: 6f9783f1756c4ce4bbebeaf44ffea44f, type: 2}
 --- !u!1 &2123584742
 GameObject:
@@ -17985,9 +18025,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 4119247283365799311}
-        m_TargetAssemblyTypeName: SliceConfiguratorUIToggle, Assembly-CSharp
-        m_MethodName: ToggleSliceConfigurator
+      - m_Target: {fileID: 964760546}
+        m_TargetAssemblyTypeName: ActiveToggle, Assembly-CSharp
+        m_MethodName: EnabledToggle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18019,7 +18059,7 @@ GameObject:
   m_Component:
   - component: {fileID: 168775997805871275}
   m_Layer: 0
-  m_Name: Keypad
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -19827,7 +19867,6 @@ GameObject:
   - component: {fileID: 3510283422643845775}
   - component: {fileID: 4119247283365799310}
   - component: {fileID: 168775997287222915}
-  - component: {fileID: 4119247283365799311}
   m_Layer: 0
   m_Name: Slice Configurator
   m_TagString: Untagged
@@ -20472,19 +20511,6 @@ MonoBehaviour:
     ReEnterDistance: 0.02
   _closeDistanceThreshold: 0.001
   _tiebreakerScore: 0
---- !u!114 &4119247283365799311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3510283422643845774}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 880e2220ca7ed834e91c2be056b5fc5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SliceConfigurator: {fileID: 964760544}
 --- !u!224 &4160061260143676552
 RectTransform:
   m_ObjectHideFlags: 0
