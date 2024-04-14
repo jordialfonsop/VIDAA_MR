@@ -78,7 +78,7 @@ public class CentrelineToolbox : MonoBehaviour
     {
         for(int i = transform.childCount-1; i > 1; i--)
         {
-            Destroy(transform.GetChild(i));
+            Destroy(transform.GetChild(i).gameObject);
         }
     }
 
