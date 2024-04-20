@@ -162,6 +162,39 @@ public class LAAMeasurementsManager : MonoBehaviour
 
     [SerializeField] private TextAsset JSONFile;
     [SerializeField] private JSONNode JSONParse;
+    [SerializeField] private GameObject ButtonSlider;
+    [SerializeField] private GameObject PointSlider;
+    [SerializeField] private GameObject ButtonPrefab;
+    [SerializeField] private GameObject PointPrefab;
+
+    [SerializeField] private GameObject CentrelineRenderManager;
+    [SerializeField] private GameObject CentrelineRender;
+
+    private CentrelineMeasurement currentCentrelineMeasures;
+
+    public CentrelineMeasurement GetCurrentCentrelineMeasures()
+    {
+        return currentCentrelineMeasures;
+    }
+
+    public void SetCurrentCentrelineMeasures()
+    {
+        int i = 1;
+        foreach (CentrelineMeasurement _centreline in _LAAMeasurements.CentrelineMeasurements)
+        {
+            string centrelineId = i.ToString();
+
+            string currentCentrelineId = CentrelineManager.Instance.GetActiveCentreline().name.Split(" ")[1];
+            
+
+            if(centrelineId == currentCentrelineId)
+            {
+                currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[i-1];
+            }
+
+            i++;
+        }
+    }
 
     public static LAAMeasurementsManager _instance;
 
@@ -301,10 +334,26 @@ public class LAAMeasurementsManager : MonoBehaviour
 
         }
     }
+
+    void GeneratePointButtons(){
+        foreach(Contours contour in currentCentrelineMeasures.contours)
+        {
+            GameObject button = Instantiate(ButtonPrefab);
+
+            button.transform.SetParent(ButtonSlider.transform);
+
+            button.GetComponent<RectTransform>().localScale = new Vector3(0.86f,1.0f,1.0f);
+            button.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     { 
         InitializeLAAMeasurements();
+        currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[0];
+        CentrelineRender = CentrelineRenderManager.transform.GetChild(0).gameObject;
+        GeneratePointButtons();
     }
 
 // Update is called once per frame
