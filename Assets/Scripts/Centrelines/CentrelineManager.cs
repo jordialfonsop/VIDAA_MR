@@ -56,14 +56,29 @@ public class CentrelineManager : MonoBehaviour
         if (activeCentreline)
         {
             activeCentreline.GetComponent<CentrelineRenderer>().SetMaterial(centrelineUnactiveMaterial);
+            
         }
         if(centreline)
         {
-            activeCentreline = centreline;
+            if (centreline != activeCentreline)
+            {
+                activeCentreline = centreline;
+                LAAMeasurementsManager.Instance.DeleteCentrelineMeasuresData();
+                LAAMeasurementsManager.Instance.SetCurrentCentrelineMeasures();
+                LAAMeasurementsManager.Instance.GenerateCentrelineMeasuresData();
+            }
+            else
+            {
+                activeCentreline = centreline;
+            }
+            
             activeCentreline.GetComponent<CentrelineRenderer>().SetMaterial(centrelineActiveMaterial);
+
+            
         }
         else
         {
+            LAAMeasurementsManager.Instance.DeleteCentrelineMeasuresData();
             activeCentreline = null;
         }
         

@@ -8,7 +8,8 @@ public class CentrelineButton : MonoBehaviour
     private bool isToggle = false;
     public void SetButtonColor(Color color)
     {
-        this.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Oculus.Interaction.RoundedBoxProperties>().Color = color;
+        Oculus.Interaction.InteractableColorVisual.ColorState colorState = new Oculus.Interaction.InteractableColorVisual.ColorState() { Color = color };
+        this.transform.GetChild(1).GetChild(0).gameObject.GetComponent<Oculus.Interaction.InteractableColorVisual>().InjectOptionalNormalColorState(colorState);
     }
 
     public bool GetIsToggle() {  return isToggle; }
@@ -32,7 +33,7 @@ public class CentrelineButton : MonoBehaviour
         if (centrelineRender.activeSelf)
         {
             SetButtonColor(new Color(255, 255, 0, 20));
-            CentrelineManager.Instance.SetActiveCentreline(centrelineRender);
+            //CentrelineManager.Instance.SetActiveCentreline(centrelineRender);
         }
         else
         {

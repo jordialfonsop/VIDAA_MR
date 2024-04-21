@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using SimpleJSON;
 using UnityEngine.UIElements;
+using static LAAMeasurementsManager;
+using TMPro;
 
 public class LAAMeasurementsManager : MonoBehaviour
 {
@@ -163,14 +165,23 @@ public class LAAMeasurementsManager : MonoBehaviour
     [SerializeField] private TextAsset JSONFile;
     [SerializeField] private JSONNode JSONParse;
     [SerializeField] private GameObject ButtonSlider;
-    [SerializeField] private GameObject PointSlider;
+    [SerializeField] public GameObject PointSlider;
     [SerializeField] private GameObject ButtonPrefab;
     [SerializeField] private GameObject PointPrefab;
 
     [SerializeField] private GameObject CentrelineRenderManager;
     [SerializeField] private GameObject CentrelineRender;
 
-    private CentrelineMeasurement currentCentrelineMeasures;
+    [SerializeField] public GameObject PointValues;
+
+    [SerializeField] private GameObject ContoursRendersOld;
+    [SerializeField] private GameObject ContoursRendersNew;
+    [SerializeField] private GameObject ContoursRendererPrefab;
+    [SerializeField] public Material contourActiveMaterial;
+    [SerializeField] public Material contourUnactiveMaterial;
+    public GameObject currentContourRender;
+
+    [SerializeField] private CentrelineMeasurement currentCentrelineMeasures;
 
     public CentrelineMeasurement GetCurrentCentrelineMeasures()
     {
@@ -190,6 +201,7 @@ public class LAAMeasurementsManager : MonoBehaviour
             if(centrelineId == currentCentrelineId)
             {
                 currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[i-1];
+                CentrelineRender = CentrelineRenderManager.transform.GetChild(i-1).gameObject;
             }
 
             i++;
@@ -239,9 +251,9 @@ public class LAAMeasurementsManager : MonoBehaviour
                                                                 temp_measurements_values[4]);
 
                 List<Points_3D> temp_Points_3D = new List<Points_3D>();
-                List<float> Points3DValues = new List<float>();
                 foreach (JSONNode Point3D in contour["points_3D"])
                 {
+                    List<float> Points3DValues = new List<float>();
                     foreach (JSONNode Axis in Point3D)
                     {
                         Points3DValues.Add(Axis);
@@ -252,14 +264,14 @@ public class LAAMeasurementsManager : MonoBehaviour
                 }
 
                 List<Points_2D> temp_Points_2D = new List<Points_2D>();
-                List<float> Points2DValues = new List<float>();
                 foreach (JSONNode Point2D in contour["points_2D"])
                 {
+                    List<float> Points2DValues = new List<float>();
                     foreach (JSONNode Axis in Point2D)
                     {
                         Points2DValues.Add(Axis);
                     }
-                    Points_2D temp_Points_2D_values = new Points_2D(Points3DValues[0], Points3DValues[1]);
+                    Points_2D temp_Points_2D_values = new Points_2D(Points2DValues[0], Points2DValues[1]);
                     temp_Points_2D.Add(temp_Points_2D_values);
 
                 }
@@ -335,7 +347,9 @@ public class LAAMeasurementsManager : MonoBehaviour
         }
     }
 
-    void GeneratePointButtons(){
+
+    public void GenerateCentrelineMeasuresData(){
+        int ascii = 65;
         foreach(Contours contour in currentCentrelineMeasures.contours)
         {
             GameObject button = Instantiate(ButtonPrefab);
@@ -344,16 +358,84 @@ public class LAAMeasurementsManager : MonoBehaviour
 
             button.GetComponent<RectTransform>().localScale = new Vector3(0.86f,1.0f,1.0f);
             button.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            button.GetComponent<RectTransform>().localRotation = new Quaternion(0.0f, 0.0f, 0.0f,0.0f);
+            button.GetComponent<PointButton>().SetContour(contour);
+
+            string name = "";
+            name += Convert.ToChar(ascii);
+            button.name = name;
+            button.GetComponent<PointButton>().SetText(name);
+            
+            ascii++;
+
+            GameObject contourRenderer = Instantiate(ContoursRendererPrefab);
+
+            for (int i = 0; i < _LAAMeasurements.CentrelineMeasurements.Count; i++)
+            {
+                if(currentCentrelineMeasures == _LAAMeasurements.CentrelineMeasurements[i])
+                {
+                    if (i > 1)
+                    {
+                        contourRenderer.transform.SetParent(ContoursRendersNew.transform);
+                    }
+                    else
+                    {
+                        contourRenderer.transform.SetParent(ContoursRendersOld.transform);
+                    }
+                }
+            }
+            
+
+            contourRenderer.transform.localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            contourRenderer.transform.localRotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+
+            contourRenderer.GetComponent<ContourRenderer>().Render(contour);
+
+            button.GetComponent<PointButton>().SetContourRender(contourRenderer);
+
         }
+    }
+
+    public void DeleteCentrelineMeasuresData()
+    {
+        for (int i = ButtonSlider.transform.childCount - 1; i > -1; i--)
+        {
+            Destroy(ButtonSlider.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = PointSlider.transform.childCount - 1; i > -1; i--)
+        {
+            Destroy(PointSlider.transform.GetChild(i).gameObject);
+        }
+
+        for (int i = ContoursRendersOld.transform.childCount - 1; i > -1; i--)
+        {
+            Destroy(ContoursRendersOld.transform.GetChild(i).gameObject);
+        }
+        for (int i = ContoursRendersNew.transform.childCount - 1; i > -1; i--)
+        {
+            Destroy(ContoursRendersNew.transform.GetChild(i).gameObject);
+        }
+
+        if (PointValues)
+        {
+            PointValues.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = "Point";
+            PointValues.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = "0";
+            PointValues.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text = "0";
+            PointValues.transform.GetChild(3).gameObject.GetComponent<TMP_Text>().text = "0";
+            PointValues.transform.GetChild(4).gameObject.GetComponent<TMP_Text>().text = "0";
+        }
+
+        currentCentrelineMeasures = null;
     }
 
     // Start is called before the first frame update
     void Start()
     { 
         InitializeLAAMeasurements();
-        currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[0];
-        CentrelineRender = CentrelineRenderManager.transform.GetChild(0).gameObject;
-        GeneratePointButtons();
+        CentrelineManager.Instance.SetActiveCentreline(CentrelineRenderManager.transform.GetChild(3).gameObject);
+        LAAMeasurementsManager.Instance.SetCurrentCentrelineMeasures();
+
     }
 
 // Update is called once per frame

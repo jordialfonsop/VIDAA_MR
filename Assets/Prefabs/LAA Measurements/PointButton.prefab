@@ -245,6 +245,7 @@ GameObject:
   - component: {fileID: 7910200859312391886}
   - component: {fileID: 7945022962132522179}
   - component: {fileID: 2457224124129199872}
+  - component: {fileID: 5321558990278289062}
   m_Layer: 5
   m_Name: PointButton
   m_TagString: Untagged
@@ -320,7 +321,19 @@ MonoBehaviour:
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5321558990278289062}
+        m_TargetAssemblyTypeName: PointButton, Assembly-CSharp
+        m_MethodName: ButtonPress
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_IsOn: 0
 --- !u!222 &7910200859312391886
 CanvasRenderer:
@@ -386,3 +399,60 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5321558990278289062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7408773062392820199}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 645521204885a4641926776ccd060bdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  contour:
+    measurements:
+      height_LAA: 0
+      D1: 0
+      D2: 0
+      PDMD: 0
+      Dmean: 0
+    points_3D: []
+    points_2D: []
+    lines:
+      D1_3D:
+        start:
+          x: 0
+          y: 0
+          z: 0
+        end:
+          x: 0
+          y: 0
+          z: 0
+      D2_3D:
+        start:
+          x: 0
+          y: 0
+          z: 0
+        end:
+          x: 0
+          y: 0
+          z: 0
+      D1_2D:
+        start:
+          x: 0
+          y: 0
+        end:
+          x: 0
+          y: 0
+      D2_2D:
+        start:
+          x: 0
+          y: 0
+        end:
+          x: 0
+          y: 0
+    name: 
+  PointStoredPrefab: {fileID: 871699764492987213, guid: 045d961108f52994baf4945cf781d9c9, type: 3}
+  PointStored: {fileID: 0}

@@ -148,6 +148,7 @@ GameObject:
   - component: {fileID: 101581264335138404}
   - component: {fileID: 7845224311102278056}
   - component: {fileID: 2135049038904074850}
+  - component: {fileID: 5958534680260509884}
   m_Layer: 5
   m_Name: PointStored
   m_TagString: Untagged
@@ -295,6 +296,25 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5958534680260509884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 871699764492987213}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2906804a3e55d8542b9a0148b8377286, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Point: {fileID: 5611920223114921450}
+  D1: {fileID: 3198164546056599330}
+  DMean: {fileID: 7162433678737745686}
+  D2: {fileID: 487716713073581342}
+  PDMD: {fileID: 7101431245215296849}
+  Device1: {fileID: 1521147634005132045}
+  Device2: {fileID: 162058300345996620}
 --- !u!1 &963908737727756460
 GameObject:
   m_ObjectHideFlags: 0
