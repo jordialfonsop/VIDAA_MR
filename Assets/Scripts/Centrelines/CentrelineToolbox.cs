@@ -50,8 +50,7 @@ public class CentrelineToolbox : MonoBehaviour
                 {
                     if (CentrelineManager.Instance.activeToggleCentrelinesList[j] == CentrelineManager.Instance.centrelinesList[i])
                     {
-                        Debug.Log("cute");
-                        centrelineButton.GetComponent<CentrelineButton>().SetButtonColor(new Color(255, 255, 0, 20));
+                        centrelineButton.GetComponent<CentrelineButton>().SetButtonColor(new Color(255, 255, 0, 0.2f));
                     }
                 }
 
@@ -85,7 +84,7 @@ public class CentrelineToolbox : MonoBehaviour
                 {
                     if (CentrelineManager.Instance.activeToggleCentrelinesList[i] == CentrelineManager.Instance.GetActiveCentreline())
                     {
-                        centrelineButton.GetComponent<CentrelineButton>().SetButtonColor(new Color(255, 255, 0, 20));
+                        centrelineButton.GetComponent<CentrelineButton>().SetButtonColor(new Color(255, 255, 0, 0.2f));
                     }
                 }
                 
@@ -103,6 +102,12 @@ public class CentrelineToolbox : MonoBehaviour
         }
     }
 
+    public void RegenerateButtons()
+    {
+        DeleteButtons();
+        GenerateButtons();
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -113,8 +118,7 @@ public class CentrelineToolbox : MonoBehaviour
     {
         if (!isToggle)
         {
-            DeleteButtons();
-            GenerateButtons();
+            RegenerateButtons();
         }   
     }
 }

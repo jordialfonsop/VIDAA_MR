@@ -22,9 +22,8 @@ public class CentrelineButton : MonoBehaviour
 
     public void SetActiveCentrelineRender()
     {
-
         CentrelineManager.Instance.SetActiveCentreline(centrelineRender);
-
+        transform.parent.gameObject.GetComponent<CentrelineToolbox>().RegenerateButtons();
     }
 
     public void ToggleActiveCentrelineRender()
@@ -32,12 +31,12 @@ public class CentrelineButton : MonoBehaviour
         centrelineRender.SetActive(!centrelineRender.activeSelf);
         if (centrelineRender.activeSelf)
         {
-            SetButtonColor(new Color(255, 255, 0, 20));
+            SetButtonColor(new Color(255, 255, 0, 0.2f));
             //CentrelineManager.Instance.SetActiveCentreline(centrelineRender);
         }
         else
         {
-            SetButtonColor(new Color(255, 255, 255, 20));
+            SetButtonColor(new Color(255, 255, 255, 0.2f));
             if (CentrelineManager.Instance.GetActiveCentreline() == centrelineRender)
             {
                 CentrelineManager.Instance.SetActiveCentreline(null);

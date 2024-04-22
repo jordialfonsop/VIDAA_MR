@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Globalization;
+using Unity.VisualScripting;
 
 public class CentrelineRenderer : MonoBehaviour
 {
@@ -10,6 +11,8 @@ public class CentrelineRenderer : MonoBehaviour
     private List<CentrelineManager.Point> centrelinePoints = new List<CentrelineManager.Point>();
     private List<GameObject> centrelineCubes = new List<GameObject>();
     private string filePathCentreline;
+    [SerializeField] private LineRenderer lineRenderer;
+
     public string GetFilePathCentreline()
     {
         return filePathCentreline;
@@ -82,36 +85,32 @@ public class CentrelineRenderer : MonoBehaviour
     void RenderCentrelinePoints(string input)
     {
         ReadCentrelinePoints(input);
-        Mesh mesh = new Mesh();
 
-        for (int i = 1;i < centrelinePoints.Count; i++)
+        lineRenderer.positionCount = centrelinePoints.Count;
+
+        for (int i = 0;i < lineRenderer.positionCount; i++)
         {
-            Vector3 Oldpos = new Vector3((float)centrelinePoints[i - 1].coordx, (float)centrelinePoints[i - 1].coordy, (float)centrelinePoints[i - 1].coordz);
-            Vector3 Newpos = new Vector3((float)centrelinePoints[i].coordx, (float)centrelinePoints[i].coordy, (float)centrelinePoints[i].coordz);
-            GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
-            capsule.transform.parent = transform;
-            capsule.transform.localScale = new Vector3(0.15f, 0.15f, 0.15f);
-            capsule.transform.localPosition = new Vector3((float)centrelinePoints[i].coordx, (float)centrelinePoints[i].coordy, (float)centrelinePoints[i].coordz);
-            centrelineCubes.Add(capsule);
+            lineRenderer.SetPosition(i, new Vector3((float)centrelinePoints[i].coordx, (float)centrelinePoints[i].coordy, (float)centrelinePoints[i].coordz));
+            
         }
-
+        lineRenderer.Simplify(0.01f);
     }
 
     public void Render()
     {
         RenderCentrelinePoints(ReadTextFile(filePathCentreline));
         CentrelineManager.Instance.centrelinesList.Add(this.gameObject);
-        transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
-        //transform.position = new Vector3(0.0f, 0.0f, -10.0f);
+        //transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         this.gameObject.SetActive(false);
     }
 
     public void SetMaterial(Material material)
     {
-        for (int i = 0; i < centrelineCubes.Count; i++)
+        for (int i = 0; i < centrelinePoints.Count; i++)
         {
-            centrelineCubes[i].GetComponent<Renderer>().material = material;
+            //centrelineCubes[i].GetComponent<Renderer>().material = material;
+            lineRenderer.material = material;
         }
     }
 

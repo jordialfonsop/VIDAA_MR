@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44202876, g: 0.45022067, b: 0.47379428, a: 1}
+  m_IndirectSpecularColor: {r: 0.44202837, g: 0.4502243, b: 0.4737963, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3963,7 +3963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   centrelinesPath: Assets/Centrelines/Bordeaux_Case5_LA
-  centrelinesPrefab: {fileID: 7418374735248906444, guid: cef49a401151741438b1a5b3a4bf3f6c, type: 3}
+  centrelinesPrefab: {fileID: 5422199869656286636, guid: cef49a401151741438b1a5b3a4bf3f6c, type: 3}
   centrelineActiveMaterial: {fileID: 2100000, guid: 5343dc484fa56e448bbeca668eaaf4aa, type: 2}
   centrelineUnactiveMaterial: {fileID: 2100000, guid: bb612ec99f40e3e4f9323a31a76a47c9, type: 2}
   centrelinesList: []
