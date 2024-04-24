@@ -14,6 +14,18 @@ public class PointButton : MonoBehaviour
 
     private bool isActive = false;
 
+    private bool isToggle = true;
+
+    public void SetIsToggle(bool isToggle)
+    {
+        this.isToggle = isToggle;
+    }
+
+    public void DeactivateBackground()
+    {
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
+
     public void ToggleIsActive()
     {
         isActive = !isActive;
@@ -68,42 +80,69 @@ public class PointButton : MonoBehaviour
 
     public void ButtonPress()
     {
-        if (isActive)
+        if (isToggle)
         {
-            if (LAAMeasurementsManager.Instance.currentContourRender == ContourRender)
+            if (isActive)
             {
-                LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourUnactiveMaterial);
+                if (LAAMeasurementsManager.Instance.currentContourRender == ContourRender)
+                {
+                    LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourUnactiveMaterial);
+                }
+                DestroyPointStored();
+                ToggleIsActive();
+                SetContourActive();
+
+                LAAMeasurementsManager.Instance.currentContourRender = null;
+
             }
-            DestroyPointStored();
-            ToggleIsActive();
-            SetContourActive();
+            else
+            {
 
-            LAAMeasurementsManager.Instance.currentContourRender = null;
+                SpawnPointStored();
+                ToggleIsActive();
+                SetContourActive();
+                if (LAAMeasurementsManager.Instance.currentContourRender)
+                {
+                    LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourUnactiveMaterial);
+                }
 
+                LAAMeasurementsManager.Instance.currentContourRender = ContourRender;
+                LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourActiveMaterial);
+
+                if (LAAMeasurementsManager.Instance.PointValues)
+                {
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = name;
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.D1 * 100.0f) * 0.01f).ToString();
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.Dmean * 100.0f) * 0.01f).ToString();
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(3).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.D2 * 100.0f) * 0.01f).ToString();
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(4).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.PDMD * 100.0f) * 0.01f).ToString();
+                }
+            }
         }
         else
         {
-            
-            SpawnPointStored();
-            ToggleIsActive();
-            SetContourActive();
-            if (LAAMeasurementsManager.Instance.currentContourRender)
+            if (ContourRender.activeSelf)
             {
-                LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourUnactiveMaterial);
+                if (LAAMeasurementsManager.Instance.currentContourRender)
+                {
+                    LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourUnactiveMaterial);
+                }
+                LAAMeasurementsManager.Instance.currentContourRender = ContourRender;
+                LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourActiveMaterial);
+
+                if (LAAMeasurementsManager.Instance.PointValues)
+                {
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = name;
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.D1 * 100.0f) * 0.01f).ToString();
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.Dmean * 100.0f) * 0.01f).ToString();
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(3).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.D2 * 100.0f) * 0.01f).ToString();
+                    LAAMeasurementsManager.Instance.PointValues.transform.GetChild(4).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.PDMD * 100.0f) * 0.01f).ToString();
+                }
+
             }
 
-            LAAMeasurementsManager.Instance.currentContourRender = ContourRender;
-            LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourActiveMaterial);
-
-            if (LAAMeasurementsManager.Instance.PointValues)
-            {
-                LAAMeasurementsManager.Instance.PointValues.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text = name;
-                LAAMeasurementsManager.Instance.PointValues.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.D1 * 100.0f) * 0.01f).ToString();
-                LAAMeasurementsManager.Instance.PointValues.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.Dmean * 100.0f) * 0.01f).ToString();
-                LAAMeasurementsManager.Instance.PointValues.transform.GetChild(3).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.D2 * 100.0f) * 0.01f).ToString();
-                LAAMeasurementsManager.Instance.PointValues.transform.GetChild(4).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.PDMD * 100.0f) * 0.01f).ToString();
-            }
         }
+
     }
     // Start is called before the first frame update
     void Start()

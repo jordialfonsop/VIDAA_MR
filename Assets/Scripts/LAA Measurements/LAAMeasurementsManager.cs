@@ -365,7 +365,23 @@ public class LAAMeasurementsManager : MonoBehaviour
             name += Convert.ToChar(ascii);
             button.name = name;
             button.GetComponent<PointButton>().SetText(name);
-            
+
+            GameObject buttonActive = Instantiate(ButtonPrefab);
+
+            buttonActive.transform.SetParent(ButtonSlider.transform);
+
+            buttonActive.GetComponent<RectTransform>().localScale = new Vector3(0.86f, 1.0f, 1.0f);
+            buttonActive.GetComponent<RectTransform>().localPosition = new Vector3(0.0f, 0.0f, 0.0f);
+            buttonActive.GetComponent<RectTransform>().localRotation = new Quaternion(0.0f, 0.0f, 0.0f, 0.0f);
+            buttonActive.GetComponent<PointButton>().SetContour(contour);
+            buttonActive.GetComponent<PointButton>().DeactivateBackground();
+
+            buttonActive.name = name;
+            buttonActive.GetComponent<PointButton>().SetText("");
+
+            buttonActive.GetComponent<PointButton>().SetIsToggle(false);
+            button.GetComponent<PointButton>().SetIsToggle(true);
+
             ascii++;
 
             GameObject contourRenderer = Instantiate(ContoursRendererPrefab);
@@ -392,6 +408,7 @@ public class LAAMeasurementsManager : MonoBehaviour
             contourRenderer.GetComponent<ContourRenderer>().Render(contour);
 
             button.GetComponent<PointButton>().SetContourRender(contourRenderer);
+            buttonActive.GetComponent<PointButton>().SetContourRender(contourRenderer);
 
         }
     }
@@ -433,8 +450,6 @@ public class LAAMeasurementsManager : MonoBehaviour
     void Start()
     { 
         InitializeLAAMeasurements();
-        CentrelineManager.Instance.SetActiveCentreline(CentrelineRenderManager.transform.GetChild(3).gameObject);
-        LAAMeasurementsManager.Instance.SetCurrentCentrelineMeasures();
 
     }
 

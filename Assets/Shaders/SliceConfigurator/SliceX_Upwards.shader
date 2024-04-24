@@ -1,6 +1,6 @@
 Shader "Slices/X_Upwards" {
     Properties{
-      _Color("Color", Color) = (1.0,1.0,1.0)
+      _Color("Color", Color) = (1.0,1.0,1.0,1.0)
       _MainTex("Texture", 2D) = "white" {}
       _BumpMap("Bumpmap", 2D) = "bump" {}
       _Offset("Extrusion Amount", Range(-53,52)) = 0

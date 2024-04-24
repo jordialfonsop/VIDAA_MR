@@ -11,6 +11,8 @@ public class ContourRenderer : MonoBehaviour
     private List<Points_3D> contourPoints = new List<Points_3D>();
     private List<GameObject> contourCubes = new List<GameObject>();
 
+    [SerializeField] private LineRenderer lineRenderer;
+
     public List<Points_3D> GetContourPoints() { return contourPoints; }
 
     void SetContourPoints(Contours contour)
@@ -23,9 +25,8 @@ public class ContourRenderer : MonoBehaviour
     void RenderContourPoints(Contours contour)
     {
         SetContourPoints(contour);
-        Mesh mesh = new Mesh();
 
-        for (int i = 1;i < contourPoints.Count; i++)
+        /*for (int i = 1;i < contourPoints.Count; i++)
         {
             GameObject capsule = GameObject.CreatePrimitive(PrimitiveType.Cube);
 
@@ -33,7 +34,17 @@ public class ContourRenderer : MonoBehaviour
             capsule.transform.localScale = new Vector3(0.2f, 0.2f, 0.2f);
             capsule.transform.localPosition = new Vector3((float)contourPoints[i].x, (float)contourPoints[i].y, (float)contourPoints[i].z);
             contourCubes.Add(capsule);
+        }*/
+
+        lineRenderer.positionCount = contourPoints.Count;
+
+        for (int i = 0; i < lineRenderer.positionCount; i++)
+        {
+
+            lineRenderer.SetPosition(i, new Vector3((float)contourPoints[i].x, (float)contourPoints[i].y, (float)contourPoints[i].z));
+
         }
+        //lineRenderer.Simplify(0.01f);
 
     }
 
@@ -47,10 +58,13 @@ public class ContourRenderer : MonoBehaviour
 
     public void SetMaterial(Material material)
     {
-        for (int i = 0; i < contourCubes.Count; i++)
+        /*for (int i = 0; i < contourCubes.Count; i++)
         {
             contourCubes[i].GetComponent<Renderer>().material = material;
-        }
+            
+        }*/
+
+        lineRenderer.material = material;
     }
 
     // Start is called before the first frame update

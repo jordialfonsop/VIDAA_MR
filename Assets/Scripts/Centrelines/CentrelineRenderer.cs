@@ -110,8 +110,10 @@ public class CentrelineRenderer : MonoBehaviour
         for (int i = 0; i < centrelinePoints.Count; i++)
         {
             //centrelineCubes[i].GetComponent<Renderer>().material = material;
-            lineRenderer.material = material;
+            
         }
+
+        lineRenderer.material = material;
     }
 
     public void RenderHardcoded(string centreline)

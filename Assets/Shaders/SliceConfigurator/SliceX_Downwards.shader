@@ -6,7 +6,7 @@ Shader "Slices/X_Downwards" {
       _Offset("Extrusion Amount", Range(97,202)) = 0
     }
         SubShader{
-          Tags { "RenderType" = "Opaque" }
+          Tags { "RenderType" = "Transparent" }
           Cull Off
           CGPROGRAM
           #pragma surface surf Lambert vertex:vert
