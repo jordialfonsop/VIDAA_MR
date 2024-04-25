@@ -1,4 +1,4 @@
-Shader "Slices/X_Downwards" {
+Shader "Slices/X_Downwards_Transparent" {
     Properties{
       _MainTex("Texture", 2D) = "white" {}
       _BumpMap("Bumpmap", 2D) = "bump" {}
@@ -8,7 +8,7 @@ Shader "Slices/X_Downwards" {
           Tags { "RenderType" = "Transparent" }
           Cull Off
           CGPROGRAM
-          #pragma surface surf Lambert vertex:vert
+          #pragma surface surf Lambert vertex:vert alpha:fade
           struct Input {
               float2 uv_MainTex;
               float2 uv_BumpMap;

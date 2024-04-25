@@ -10,15 +10,38 @@ public class Slicer : MonoBehaviour
 {
     [SerializeField] private float shaderMin;
     [SerializeField] private float shaderMax;
-    [SerializeField] private Material slicerMaterial;
+    [SerializeField] private Material slicerMaterialOpaque;
+    [SerializeField] private Material slicerMaterialTransparent;
     private Vector3 initialPosition;
     private float[] positionBoundaries = { 0.0f, 0.0f };
     private float[] shaderBoundaries = { 0.0f, 0.0f };
     private string axis;
     private string direction;
 
+    private bool isTransparent = false;
 
-    public Material GetSlicerMaterial() { return slicerMaterial; }
+    public bool GetIsTransparent()
+    {
+        return isTransparent;
+    }
+
+    public void SetIsTransparent(bool isTransparent)
+    {
+        this.isTransparent = isTransparent;
+    }
+
+
+    public Material GetSlicerMaterial() {
+
+        if (isTransparent)
+        {
+            return slicerMaterialTransparent;
+        }
+        else
+        {
+            return slicerMaterialOpaque;
+        }
+    }
 
     public float[] GetShaderBoundaries() { return shaderBoundaries; }
 

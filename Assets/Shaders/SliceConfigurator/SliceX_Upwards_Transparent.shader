@@ -1,14 +1,14 @@
-Shader "Slices/X_Downwards" {
+Shader "Slices/X_Upwards_Transparent" {
     Properties{
       _MainTex("Texture", 2D) = "white" {}
       _BumpMap("Bumpmap", 2D) = "bump" {}
-      _Offset("Extrusion Amount", Range(97,202)) = 0
+      _Offset("Extrusion Amount", Range(-53,52)) = 0
     }
         SubShader{
           Tags { "RenderType" = "Transparent" }
           Cull Off
           CGPROGRAM
-          #pragma surface surf Lambert vertex:vert
+          #pragma surface surf Lambert vertex:vert alpha:fade
           struct Input {
               float2 uv_MainTex;
               float2 uv_BumpMap;
