@@ -12,6 +12,17 @@ public class SliceConfiguratorManager : MonoBehaviour
     private float shaderBoundariesDistance;
     private string currentDirection;
 
+    private bool isTransparent = false;
+
+    public bool GetIsTransparent() {  return isTransparent; }
+
+    public void SetIsTransparent(bool isTransparent) { this.isTransparent = isTransparent; }
+
+    public string GetCurrentDirection()
+    {
+        return currentDirection;
+    }
+
     private static SliceConfiguratorManager _instance;
     public static SliceConfiguratorManager Instance
     {
@@ -44,6 +55,7 @@ public class SliceConfiguratorManager : MonoBehaviour
 
         shaderBoundariesDistance = Mathf.Abs(shaderBoundaries[0] - shaderBoundaries[1]);
 
+        currentSlicer.GetComponent<Slicer>().SetIsTransparent(isTransparent);
         heart.GetComponent<Renderer>().material = currentSlicer.GetComponent<Slicer>().GetSlicerMaterial();
     }
     // Start is called before the first frame update
@@ -52,7 +64,7 @@ public class SliceConfiguratorManager : MonoBehaviour
         
     }
 
-    private void UpdateShader()
+    public void UpdateShader()
     {
         float distance = currentSlicer.GetComponent<Slicer>().GetDistance();
         float maxDistance = currentSlicer.GetComponent<Slicer>().GetMaxDistance();
