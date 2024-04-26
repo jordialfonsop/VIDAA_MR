@@ -173,6 +173,12 @@ public class LAAMeasurementsManager : MonoBehaviour
     [SerializeField] private GameObject CentrelineRender;
 
     [SerializeField] public GameObject PointValues;
+    [SerializeField] public GameObject RecommendedSizeWatchmanFLX;
+    private float[,] sizeRangesWatchmanFLX = { { 14f, 18f }, { 16.8f, 21.6f }, { 18.9f, 24.3f }, { 21.7f, 27.9f }, { 24.5f, 31.5f } };
+    private float[] sizesWatchmanFLX = { 20, 24, 27, 31, 35 };
+    [SerializeField] public GameObject RecommendedSizeAmplatzerAMULET;
+    private float[,] sizeRangesAmplatzerAMULET = { { 11f, 13f }, { 13f, 15f }, { 15f, 17f }, { 17f, 19f }, { 19f, 22f }, { 22f, 25f }, { 25f, 28f }, { 28f, 31f } };
+    private float[] sizesAmplatzerAMULET = {16, 18, 20, 22, 25, 28, 31, 34};
 
     [SerializeField] private GameObject ContoursRendersOld;
     [SerializeField] private GameObject ContoursRendersNew;
@@ -347,7 +353,61 @@ public class LAAMeasurementsManager : MonoBehaviour
         }
     }
 
+    public void CalculateRecommendedSizes()
+    {
+        if (PointValues && PointValues.transform.GetChild(0).gameObject.GetComponent<TMP_Text>().text != "Point")
+        {
+            float currentContourD1 = float.Parse(PointValues.transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text);
+            float currentContourDMean = float.Parse(PointValues.transform.GetChild(2).gameObject.GetComponent<TMP_Text>().text);
+            //D1 = Watchman FLX
+            //DMean = Amplatzer AMULET
+            float bestDistance = 99999999f;
+            for (int i = 0; i < (sizeRangesWatchmanFLX.Length / 2); i++)
+            {
+                float middlePoint = (sizeRangesWatchmanFLX[i, 0] + sizeRangesWatchmanFLX[i, 1]) / 2;
+                float distanceFromMiddlePoint = Mathf.Abs(middlePoint - currentContourD1);
+                
+                int bestIndex = 0;
 
+                if(i == 0)
+                {
+                    bestDistance = distanceFromMiddlePoint;
+                }
+                else
+                {
+                    if(distanceFromMiddlePoint < bestDistance)
+                    {
+                        bestDistance = distanceFromMiddlePoint;
+                        bestIndex = i;
+                    }
+                }
+
+                RecommendedSizeWatchmanFLX.GetComponent<TMP_Text>().text = sizesWatchmanFLX[bestIndex].ToString();
+            }
+
+
+            if(currentContourDMean <= 31f)
+            {
+                for (int i = 0; i < (sizeRangesAmplatzerAMULET.Length / 2); i++)
+                {
+                    if (currentContourDMean >= sizeRangesAmplatzerAMULET[i, 0] && currentContourDMean < sizeRangesAmplatzerAMULET[i, 1])
+                    {
+                        RecommendedSizeAmplatzerAMULET.GetComponent<TMP_Text>().text = sizesAmplatzerAMULET[i].ToString();
+                    }
+                }
+            }
+            else
+            {
+                RecommendedSizeAmplatzerAMULET.GetComponent<TMP_Text>().text = sizesAmplatzerAMULET[7].ToString();
+            }
+            
+        }
+        else
+        {
+            RecommendedSizeAmplatzerAMULET.GetComponent<TMP_Text>().text = "0";
+            RecommendedSizeWatchmanFLX.GetComponent<TMP_Text>().text = "0";
+        }
+    }
     public void GenerateCentrelineMeasuresData(){
         int ascii = 65;
         foreach(Contours contour in currentCentrelineMeasures.contours)
@@ -450,7 +510,6 @@ public class LAAMeasurementsManager : MonoBehaviour
     void Start()
     { 
         InitializeLAAMeasurements();
-
     }
 
 // Update is called once per frame
