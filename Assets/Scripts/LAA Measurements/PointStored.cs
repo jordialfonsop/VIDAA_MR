@@ -20,8 +20,6 @@ public class PointStored : MonoBehaviour
         this.DMean.text = DMean;
         this.D2.text = D2;
         this.PDMD.text = PDMD;
-        this.Device1.text = Device1;
-        this.Device2.text = Device2;
     }
 
     // Start is called before the first frame update

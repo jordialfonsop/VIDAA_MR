@@ -170,7 +170,6 @@ public class LAAMeasurementsManager : MonoBehaviour
     [SerializeField] private GameObject PointPrefab;
 
     [SerializeField] private GameObject CentrelineRenderManager;
-    [SerializeField] private GameObject CentrelineRender;
 
     [SerializeField] public GameObject PointValues;
     [SerializeField] public GameObject RecommendedSizeWatchmanFLX;
@@ -186,6 +185,9 @@ public class LAAMeasurementsManager : MonoBehaviour
     [SerializeField] public Material contourActiveMaterial;
     [SerializeField] public Material contourUnactiveMaterial;
     public GameObject currentContourRender;
+    public Contours currentContour;
+
+    [SerializeField] public Contour2D contour2D;
 
     [SerializeField] private CentrelineMeasurement currentCentrelineMeasures;
 
@@ -207,7 +209,6 @@ public class LAAMeasurementsManager : MonoBehaviour
             if(centrelineId == currentCentrelineId)
             {
                 currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[i-1];
-                CentrelineRender = CentrelineRenderManager.transform.GetChild(i-1).gameObject;
             }
 
             i++;
@@ -215,8 +216,6 @@ public class LAAMeasurementsManager : MonoBehaviour
     }
 
     public static LAAMeasurementsManager _instance;
-
-
 
     public static LAAMeasurementsManager Instance
     {
@@ -228,6 +227,10 @@ public class LAAMeasurementsManager : MonoBehaviour
         _instance = this;
     }
 
+    public void RenderContour2D()
+    {
+        contour2D.RenderContour2D();
+    }
     public void InitializeLAAMeasurements()
     {
         JSONParse = JSONNode.Parse(JSONFile.text);
@@ -510,6 +513,8 @@ public class LAAMeasurementsManager : MonoBehaviour
     void Start()
     { 
         InitializeLAAMeasurements();
+        currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[0];
+        GenerateCentrelineMeasuresData();
     }
 
 // Update is called once per frame

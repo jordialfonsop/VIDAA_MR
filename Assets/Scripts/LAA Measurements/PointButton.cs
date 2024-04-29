@@ -78,6 +78,11 @@ public class PointButton : MonoBehaviour
         Destroy(PointStored);
     }
 
+    public void SetCurrentContour(LAAMeasurementsManager.Contours contours)
+    {
+        LAAMeasurementsManager.Instance.currentContour = contours;
+    }
+
     public void ButtonPress()
     {
         if (isToggle)
@@ -102,7 +107,9 @@ public class PointButton : MonoBehaviour
                 SpawnPointStored();
                 ToggleIsActive();
                 SetContourActive();
-                
+                SetCurrentContour(contour);
+                LAAMeasurementsManager.Instance.RenderContour2D();
+
                 if (LAAMeasurementsManager.Instance.currentContourRender)
                 {
                     LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourUnactiveMaterial);
@@ -143,6 +150,8 @@ public class PointButton : MonoBehaviour
                     LAAMeasurementsManager.Instance.PointValues.transform.GetChild(4).gameObject.GetComponent<TMP_Text>().text = (Mathf.Round(contour.measurements.PDMD * 100.0f) * 0.01f).ToString();
                 }
                 LAAMeasurementsManager.Instance.CalculateRecommendedSizes();
+                SetCurrentContour(contour);
+                LAAMeasurementsManager.Instance.RenderContour2D();
 
             }
 
