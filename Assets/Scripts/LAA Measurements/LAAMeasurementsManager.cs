@@ -188,6 +188,7 @@ public class LAAMeasurementsManager : MonoBehaviour
     public Contours currentContour;
 
     [SerializeField] public Contour2D contour2D;
+    [SerializeField] public MeasurementsGraph measurementsGraph;
 
     [SerializeField] private CentrelineMeasurement currentCentrelineMeasures;
 
@@ -230,6 +231,21 @@ public class LAAMeasurementsManager : MonoBehaviour
     public void RenderContour2D()
     {
         contour2D.RenderContour2D();
+    }
+
+    public void ResetContour2D()
+    {
+        contour2D.ResetLines();
+    }
+
+    public void RenderMeasurementsGraph()
+    {
+        measurementsGraph.RenderMeasurementsGraph();
+    }
+
+    public void ResetMeasurementsGraph()
+    {
+        measurementsGraph.ResetMeasurementsGraph();
     }
     public void InitializeLAAMeasurements()
     {
@@ -473,6 +489,7 @@ public class LAAMeasurementsManager : MonoBehaviour
             button.GetComponent<PointButton>().SetContourRender(contourRenderer);
             buttonActive.GetComponent<PointButton>().SetContourRender(contourRenderer);
 
+            RenderMeasurementsGraph();
         }
     }
 
@@ -507,14 +524,16 @@ public class LAAMeasurementsManager : MonoBehaviour
         }
 
         currentCentrelineMeasures = null;
+        ResetContour2D();
+        ResetMeasurementsGraph();
     }
 
     // Start is called before the first frame update
     void Start()
     { 
         InitializeLAAMeasurements();
-        currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[0];
-        GenerateCentrelineMeasuresData();
+        //currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[0];
+        //GenerateCentrelineMeasuresData();
     }
 
 // Update is called once per frame

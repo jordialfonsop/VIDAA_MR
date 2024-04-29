@@ -92,13 +92,14 @@ public class PointButton : MonoBehaviour
                 if (LAAMeasurementsManager.Instance.currentContourRender == ContourRender)
                 {
                     LAAMeasurementsManager.Instance.currentContourRender.GetComponent<ContourRenderer>().SetMaterial(LAAMeasurementsManager.Instance.contourUnactiveMaterial);
+                    LAAMeasurementsManager.Instance.currentContour = null;
+                    LAAMeasurementsManager.Instance.currentContourRender = null;
+                    LAAMeasurementsManager.Instance.ResetContour2D();            
+                    LAAMeasurementsManager.Instance.CalculateRecommendedSizes();
                 }
                 DestroyPointStored();
                 ToggleIsActive();
                 SetContourActive();
-
-                LAAMeasurementsManager.Instance.currentContourRender = null;
-                LAAMeasurementsManager.Instance.CalculateRecommendedSizes();
 
             }
             else
