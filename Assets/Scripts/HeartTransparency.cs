@@ -1,6 +1,8 @@
+using Meta.WitAi.Data;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HeartTransparency : MonoBehaviour
 {
@@ -23,20 +25,55 @@ public class HeartTransparency : MonoBehaviour
     [SerializeField] Texture2D heartTexture_50;
     [SerializeField] Texture2D heartTexture_25;
 
+    [SerializeField] private GameObject slider;
+
+    [SerializeField] private float[] sliderPositionRange = { -79.5f, 79.5f };
+    [SerializeField] private float[] shaderTransparentRange = { 0f, 1f };
+
     [SerializeField] GameObject heart;
     // Start is called before the first frame update
 
-    public void SetTransparentTexture(Texture2D texture)
+    public void SetTransparentTexture(float value)
     {
-        X_Downwards_Transparent.mainTexture = texture;
-        X_Upwards_Transparent.mainTexture = texture;
-        Y_Downwards_Transparent.mainTexture = texture;
-        Y_Upwards_Transparent.mainTexture = texture;
-        Z_Downwards_Transparent.mainTexture = texture;
-        Z_Upwards_Transparent.mainTexture = texture;
+        X_Downwards_Transparent.SetFloat("_Transparency", value);
+        X_Upwards_Transparent.SetFloat("_Transparency", value);
+        Y_Downwards_Transparent.SetFloat("_Transparency", value);
+        Y_Upwards_Transparent.SetFloat("_Transparency", value);
+        Z_Downwards_Transparent.SetFloat("_Transparency", value);
+        Z_Upwards_Transparent.SetFloat("_Transparency", value);
+
+        //Debug.Log("Value: " + value);
+        //heart.GetComponent<Renderer>().material.SetFloat("_Transparency", value);
     }
 
-    public void ButtonPress(string quantity)
+    public float GetTransparencyLevel()
+    {
+        float sliderPosition = slider.transform.localPosition.x;
+
+        //Debug.Log("sliderPosition: " + sliderPosition);
+
+        float distance = Mathf.Abs(sliderPosition - sliderPositionRange[0]);
+
+        //Debug.Log("Distance: " + distance);
+
+        float maxDistance = Mathf.Abs(sliderPositionRange[1] - sliderPositionRange[0]);
+
+        //Debug.Log("Max Distance: " + maxDistance);
+
+        float distancePercentage = distance / (maxDistance / 100);
+
+        //Debug.Log("Distance Percentage: " + distancePercentage);
+
+        float shaderDistance = Mathf.Abs(shaderTransparentRange[1] - shaderTransparentRange[0]);
+
+        //Debug.Log("Shader Distance: " + shaderDistance);
+
+        //Debug.Log("Result: " + (shaderDistance / 100) * distancePercentage);
+        
+        return (shaderDistance / 100) * distancePercentage;
+    }
+
+    public void ButtonPress(float value)
     {
         GameObject currentSlicer;
         string currentDirection = "";
@@ -54,7 +91,7 @@ public class HeartTransparency : MonoBehaviour
 
         
 
-        if (quantity == "100")
+        if (value >= (shaderTransparentRange[1]-0.02f))
         {
             SliceConfiguratorManager.Instance.SetIsTransparent(false);
             if (currentSlicer)
@@ -109,22 +146,7 @@ public class HeartTransparency : MonoBehaviour
         else
         {
             SliceConfiguratorManager.Instance.SetIsTransparent(true);
-            switch (quantity)
-            {
-                case "90":
-                    SetTransparentTexture(heartTexture_90);
-                    break;
-                case "75":
-                    SetTransparentTexture(heartTexture_75);
-                    break;
-                case "50":
-                    SetTransparentTexture(heartTexture_50);
-                    break;
-                case "25":
-                    SetTransparentTexture(heartTexture_25);
-                    break;
-                default: break;
-            }
+            SetTransparentTexture(value);
 
             if (currentSlicer)
             {
@@ -188,6 +210,7 @@ public class HeartTransparency : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //SetTransparentTexture(GetTransparencyLevel());
+        ButtonPress(GetTransparencyLevel());
     }
 }

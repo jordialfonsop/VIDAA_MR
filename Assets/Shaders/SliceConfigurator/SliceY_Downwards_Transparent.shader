@@ -3,10 +3,12 @@ Shader "Slices/Y_Upwards_Transparent" {
       _MainTex("Texture", 2D) = "white" {}
       _BumpMap("Bumpmap", 2D) = "bump" {}
       _Offset("Extrusion Amount", Range(-193,-115)) = 0
+      _Transparency("Transparency", Range(0,2)) = 1
     }
         SubShader{
-          Tags { "RenderType" = "Transparent" }
-          Cull Off
+          Tags {"RenderType" = "Transparent" "IgnoreProjector" = "True"}
+          Cull Front
+          Blend DstColor SrcColor
           CGPROGRAM
           #pragma surface surf Lambert vertex:vert alpha:fade
           struct Input {
@@ -19,6 +21,7 @@ Shader "Slices/Y_Upwards_Transparent" {
           sampler2D _BumpMap;
           float _Frequency;
           float _Offset;
+          float _Transparency;
 
           void vert(inout appdata_full v, out Input o) {
               UNITY_INITIALIZE_OUTPUT(Input, o);
@@ -29,7 +32,7 @@ Shader "Slices/Y_Upwards_Transparent" {
               clip(frac((IN.objPos.y + _Offset) * 0.001) - 0.1);
               o.Albedo = tex2D(_MainTex, IN.uv_MainTex).rgb;
               o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
-              o.Alpha = tex2D(_MainTex, IN.uv_MainTex).a;
+              o.Alpha = tex2D(_MainTex, IN.uv_MainTex).a * _Transparency;
           }
           ENDCG
     }
