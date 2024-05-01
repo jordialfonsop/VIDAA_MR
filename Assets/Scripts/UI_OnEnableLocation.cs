@@ -5,6 +5,8 @@ using UnityEngine;
 public class UIOnEnableLocation : MonoBehaviour
 {
     [SerializeField] private GameObject target;
+
+    [SerializeField] private float distance = 0.25f;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,8 +24,6 @@ public class UIOnEnableLocation : MonoBehaviour
         float xpos = 0;
         float ypos = 0;
         float zpos = 0;
-
-        float distance = 0.25f;
 
         if (target.transform.forward.x > 0)
         {
