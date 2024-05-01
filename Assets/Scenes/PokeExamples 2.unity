@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44202837, g: 0.4502243, b: 0.4737963, a: 1}
+  m_IndirectSpecularColor: {r: 0.44202876, g: 0.45022067, b: 0.47379428, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -68829,7 +68829,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1510399166
 Transform:
   m_ObjectHideFlags: 0
@@ -81698,6 +81698,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1793164699}
+  - component: {fileID: 1793164700}
   m_Layer: 0
   m_Name: UIHandTutorial
   m_TagString: Untagged
@@ -81724,6 +81725,19 @@ Transform:
   m_Father: {fileID: 2003601629}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1793164700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793164698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc4e93cbcd1139d45ab4f6b9ab8a51d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heartPivot: {fileID: 1510399165}
 --- !u!1 &1794189203
 GameObject:
   m_ObjectHideFlags: 0

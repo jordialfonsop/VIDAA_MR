@@ -543,6 +543,7 @@ public class LAAMeasurementsManager : MonoBehaviour
         RecommendedSizeWatchmanFLX.GetComponent<TMP_Text>().text = "0";
         ResetContour2D();
         ResetMeasurementsGraph();
+        noContoursWarningUI.SetActive(false);
     }
 
 
