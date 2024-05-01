@@ -80,6 +80,7 @@ public class CentrelineManager : MonoBehaviour
         {
             LAAMeasurementsManager.Instance.DeleteCentrelineMeasuresData();
             activeCentreline = null;
+            LAAMeasurementsManager.Instance.activeCentrelineWarningUI.SetActive(true);
         }
         
     }

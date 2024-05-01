@@ -190,6 +190,9 @@ public class LAAMeasurementsManager : MonoBehaviour
     [SerializeField] public Contour2D contour2D;
     [SerializeField] public MeasurementsGraph measurementsGraph;
 
+    [SerializeField] public GameObject activeCentrelineWarningUI;
+    [SerializeField] public GameObject noContoursWarningUI;
+
     [SerializeField] private CentrelineMeasurement currentCentrelineMeasures;
 
     public CentrelineMeasurement GetCurrentCentrelineMeasures()
@@ -429,6 +432,15 @@ public class LAAMeasurementsManager : MonoBehaviour
     }
     public void GenerateCentrelineMeasuresData(){
         int ascii = 65;
+
+        if(currentCentrelineMeasures.contours.Count == 0)
+        {
+            noContoursWarningUI.SetActive(true);
+        }
+        else
+        {
+            noContoursWarningUI.SetActive(false);
+        }
         foreach(Contours contour in currentCentrelineMeasures.contours)
         {
             GameObject button = Instantiate(ButtonPrefab);
@@ -492,6 +504,7 @@ public class LAAMeasurementsManager : MonoBehaviour
             RenderMeasurementsGraph();
 
             //button.GetComponent<PointButton>().ButtonPress();
+            activeCentrelineWarningUI.SetActive(false);
         }
     }
 
@@ -526,6 +539,8 @@ public class LAAMeasurementsManager : MonoBehaviour
         }
 
         currentCentrelineMeasures = null;
+        RecommendedSizeAmplatzerAMULET.GetComponent<TMP_Text>().text = "0";
+        RecommendedSizeWatchmanFLX.GetComponent<TMP_Text>().text = "0";
         ResetContour2D();
         ResetMeasurementsGraph();
     }
