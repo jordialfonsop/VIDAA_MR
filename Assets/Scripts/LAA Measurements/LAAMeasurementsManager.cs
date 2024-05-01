@@ -490,6 +490,8 @@ public class LAAMeasurementsManager : MonoBehaviour
             buttonActive.GetComponent<PointButton>().SetContourRender(contourRenderer);
 
             RenderMeasurementsGraph();
+
+            button.GetComponent<PointButton>().ButtonPress();
         }
     }
 
@@ -528,12 +530,13 @@ public class LAAMeasurementsManager : MonoBehaviour
         ResetMeasurementsGraph();
     }
 
+
     // Start is called before the first frame update
     void Start()
     { 
         InitializeLAAMeasurements();
-        //currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[0];
-        //GenerateCentrelineMeasuresData();
+        currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[0];
+        GenerateCentrelineMeasuresData();
     }
 
 // Update is called once per frame
