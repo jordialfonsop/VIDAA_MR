@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ActiveToggle : MonoBehaviour
 {
+    [SerializeField] private GameObject tutorialObject;
+    private bool isTutorialShown = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,22 @@ public class ActiveToggle : MonoBehaviour
 
     public void EnabledToggle()
     {
-        this.transform.gameObject.SetActive(!this.transform.gameObject.activeSelf);
+        if(tutorialObject != null)
+        {
+            if(isTutorialShown)
+            {
+                this.transform.gameObject.SetActive(!this.transform.gameObject.activeSelf);
+            }
+            else
+            {
+                isTutorialShown=true;
+            }
+            
+        }
+        else
+        {
+            this.transform.gameObject.SetActive(!this.transform.gameObject.activeSelf);
+        }
+        
     }
 }
