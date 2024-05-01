@@ -64,8 +64,6 @@ public class UIOnEnableLocation : MonoBehaviour
             
         }
 
-        Debug.Log("zpos: " + target.transform.position.z);
-
         this.transform.position = new Vector3(xpos, ypos, zpos);
         transform.rotation = Quaternion.LookRotation(transform.position - target.transform.position);
     }

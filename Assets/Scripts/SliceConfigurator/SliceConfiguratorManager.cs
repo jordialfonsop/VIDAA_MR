@@ -14,8 +14,6 @@ public class SliceConfiguratorManager : MonoBehaviour
 
     private bool isTransparent = false;
 
-    public bool GetIsTransparent() {  return isTransparent; }
-
     public void SetIsTransparent(bool isTransparent) { this.isTransparent = isTransparent; }
 
     public string GetCurrentDirection()

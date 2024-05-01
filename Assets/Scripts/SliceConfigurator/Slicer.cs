@@ -20,11 +20,6 @@ public class Slicer : MonoBehaviour
 
     private bool isTransparent = false;
 
-    public bool GetIsTransparent()
-    {
-        return isTransparent;
-    }
-
     public void SetIsTransparent(bool isTransparent)
     {
         this.isTransparent = isTransparent;
@@ -45,7 +40,6 @@ public class Slicer : MonoBehaviour
 
     public float[] GetShaderBoundaries() { return shaderBoundaries; }
 
-    public string GetAxis() { return axis; }
     public string GetDirection() { return direction; }
 
     public float[] GetPositionBoundaries() { return positionBoundaries; }

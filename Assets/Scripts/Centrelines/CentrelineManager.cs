@@ -104,6 +104,7 @@ public class CentrelineManager : MonoBehaviour
     {
         _instance = this;
     }
+
     // Start is called before the first frame update (Dynamic version)
     /*void Start()
     {

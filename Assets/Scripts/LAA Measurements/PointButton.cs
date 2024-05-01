@@ -41,11 +41,6 @@ public class PointButton : MonoBehaviour
         ContourRender = contour;
     }
 
-    public LAAMeasurementsManager.Contours GetContour()
-    {
-        return this.contour;
-    }
-
     public void SetText(string text)
     {
         transform.GetChild(1).gameObject.GetComponent<TMP_Text>().text = text;

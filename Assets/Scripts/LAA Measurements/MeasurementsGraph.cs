@@ -14,8 +14,6 @@ public class MeasurementsGraph : MonoBehaviour
     [SerializeField] private LineRenderer DMeanLine;
     [SerializeField] private LineRenderer PDMDLine;
 
-    [SerializeField] private float scaley = 0.001f;
-
     [SerializeField] private GameObject separatorLinePrefab;
     [SerializeField] private GameObject separatorLines;
 
@@ -42,11 +40,9 @@ public class MeasurementsGraph : MonoBehaviour
 
     public void DestroyAllSeparators()
     {
-        GameObject[] others = GameObject.FindGameObjectsWithTag("SeparatorLine"); //Get array of
-        //all possible objects with a given tag.
+        GameObject[] others = GameObject.FindGameObjectsWithTag("SeparatorLine");
         foreach (GameObject go in others)
-        { //Get all of those objects so we can check them..
-            //As long as the gameObject we're checking isn't ours..
+        { 
             Destroy(go);
         }
     }

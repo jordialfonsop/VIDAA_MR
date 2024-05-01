@@ -9,7 +9,6 @@ public class CentrelineRenderer : MonoBehaviour
 {
 
     private List<CentrelineManager.Point> centrelinePoints = new List<CentrelineManager.Point>();
-    private List<GameObject> centrelineCubes = new List<GameObject>();
     private string filePathCentreline;
     [SerializeField] private LineRenderer lineRenderer;
 
@@ -101,17 +100,11 @@ public class CentrelineRenderer : MonoBehaviour
     {
         RenderCentrelinePoints(ReadTextFile(filePathCentreline));
         CentrelineManager.Instance.centrelinesList.Add(this.gameObject);
-        //transform.localScale = new Vector3(0.01f, 0.01f, 0.01f);
         this.gameObject.SetActive(false);
     }
 
     public void SetMaterial(Material material)
     {
-        for (int i = 0; i < centrelinePoints.Count; i++)
-        {
-            //centrelineCubes[i].GetComponent<Renderer>().material = material;
-            
-        }
 
         lineRenderer.material = material;
     }

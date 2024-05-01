@@ -436,10 +436,12 @@ public class LAAMeasurementsManager : MonoBehaviour
         if(currentCentrelineMeasures.contours.Count == 0)
         {
             noContoursWarningUI.SetActive(true);
+            activeCentrelineWarningUI.SetActive(false);
         }
         else
         {
             noContoursWarningUI.SetActive(false);
+            activeCentrelineWarningUI.SetActive(false);
         }
         foreach(Contours contour in currentCentrelineMeasures.contours)
         {
@@ -503,8 +505,7 @@ public class LAAMeasurementsManager : MonoBehaviour
 
             RenderMeasurementsGraph();
 
-            //button.GetComponent<PointButton>().ButtonPress();
-            activeCentrelineWarningUI.SetActive(false);
+            
         }
     }
 
@@ -551,8 +552,6 @@ public class LAAMeasurementsManager : MonoBehaviour
     void Start()
     { 
         InitializeLAAMeasurements();
-        //currentCentrelineMeasures = _LAAMeasurements.CentrelineMeasurements[0];
-        //GenerateCentrelineMeasuresData();
     }
 
 // Update is called once per frame

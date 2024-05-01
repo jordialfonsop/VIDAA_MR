@@ -20,11 +20,6 @@ public class HeartTransparency : MonoBehaviour
     [SerializeField] Material Z_Downwards;
     [SerializeField] Material Z_Upwards;
 
-    [SerializeField] Texture2D heartTexture_90;
-    [SerializeField] Texture2D heartTexture_75;
-    [SerializeField] Texture2D heartTexture_50;
-    [SerializeField] Texture2D heartTexture_25;
-
     [SerializeField] private GameObject slider;
 
     [SerializeField] private float[] sliderPositionRange = { -79.5f, 79.5f };
@@ -42,33 +37,19 @@ public class HeartTransparency : MonoBehaviour
         Z_Downwards_Transparent.SetFloat("_Transparency", value);
         Z_Upwards_Transparent.SetFloat("_Transparency", value);
 
-        //Debug.Log("Value: " + value);
-        //heart.GetComponent<Renderer>().material.SetFloat("_Transparency", value);
     }
 
     public float GetTransparencyLevel()
     {
         float sliderPosition = slider.transform.localPosition.x;
 
-        //Debug.Log("sliderPosition: " + sliderPosition);
-
         float distance = Mathf.Abs(sliderPosition - sliderPositionRange[0]);
-
-        //Debug.Log("Distance: " + distance);
 
         float maxDistance = Mathf.Abs(sliderPositionRange[1] - sliderPositionRange[0]);
 
-        //Debug.Log("Max Distance: " + maxDistance);
-
         float distancePercentage = distance / (maxDistance / 100);
 
-        //Debug.Log("Distance Percentage: " + distancePercentage);
-
         float shaderDistance = Mathf.Abs(shaderTransparentRange[1] - shaderTransparentRange[0]);
-
-        //Debug.Log("Shader Distance: " + shaderDistance);
-
-        //Debug.Log("Result: " + (shaderDistance / 100) * distancePercentage);
         
         return (shaderDistance / 100) * distancePercentage;
     }
@@ -210,7 +191,6 @@ public class HeartTransparency : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //SetTransparentTexture(GetTransparencyLevel());
         ButtonPress(GetTransparencyLevel());
     }
 }
