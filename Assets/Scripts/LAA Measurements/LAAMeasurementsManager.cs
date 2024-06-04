@@ -272,11 +272,11 @@ public class LAAMeasurementsManager : MonoBehaviour
                 {
                     temp_measurements_values.Add(measurement);
                 }
-                Measurements temp_measurements = new Measurements(temp_measurements_values[0],
+                Measurements temp_measurements = new Measurements(temp_measurements_values[2],
+                                                                temp_measurements_values[0],
                                                                 temp_measurements_values[1],
-                                                                temp_measurements_values[2],
-                                                                temp_measurements_values[3],
-                                                                temp_measurements_values[4]);
+                                                                temp_measurements_values[4],
+                                                                temp_measurements_values[5]);
 
                 List<Points_3D> temp_Points_3D = new List<Points_3D>();
                 foreach (JSONNode Point3D in contour["points_3D"])
